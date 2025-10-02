@@ -3,150 +3,220 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Painel de Devolução</title>
+  <title>Painel de Devolução e Reembolso</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f7f7f7;
+    * {
       margin: 0;
-      padding: 15px;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f4f4f4;
       display: flex;
-      justify-content: center;  /* centraliza horizontal */
-      align-items: center;      /* centraliza vertical */
-      min-height: 100vh;        /* ocupa toda a altura da tela */
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+      color: #333;
     }
 
     .container {
       width: 100%;
-      max-width: 420px; /* largura ajustada para celular */
-      background: #fff;
-      padding: 20px;
+      max-width: 500px;
+      background-color: #ffffff;
+      padding: 30px;
       border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(255, 0, 0, 0.1);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease-in-out;
     }
 
     h1 {
-      font-size: 22px;
-      color: #111;
-      margin-bottom: 20px;
+      font-size: 28px;
+      color: #007bff;
       text-align: center;
+      margin-bottom: 30px;
+      font-weight: 600;
+      text-transform: uppercase;
     }
 
     label {
-      font-weight: bold;
-      margin-top: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #555;
+      margin-top: 20px;
       display: block;
     }
 
     input {
       width: 100%;
-      padding: 10px;
+      padding: 15px;
+      font-size: 16px;
+      margin-top: 10px;
       border: 1px solid #ddd;
       border-radius: 8px;
-      font-size: 14px;
-      margin-top: 5px;
-      box-sizing: border-box;
+      background-color: #f9f9f9;
+      color: #333;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
     }
 
     input:focus {
-      border-color: red;
+      border-color: #007bff;
+      outline: none;
+      box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
     }
 
-    .btn {
-      margin-top: 20px;
-      display: block;
+    button {
       width: 100%;
-      padding: 14px;
-      background: red;
+      padding: 15px;
+      background-color: #007bff;
       color: #fff;
-      font-size: 16px;
-      font-weight: bold;
+      font-size: 18px;
+      font-weight: 600;
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .btn:hover {
-      background: #c70000;
-    }
-
-    /* Comprovante */
-    .comprovante {
       margin-top: 20px;
-      padding: 20px;
-      background: #f0f3f6;
-      border-radius: 10px;
-      display: none; /* escondido até gerar */
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .comprovante {
+      margin-top: 35px;
+      background-color: #f8f9fa;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      display: none;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.4s ease-in-out;
+    }
+
+    .comprovante.show {
+      opacity: 1;
+      transform: translateY(0);
+      display: block;
     }
 
     .comprovante h2 {
-      font-size: 18px;
-      margin-bottom: 15px;
-      color: #ff0000;
+      color: #007bff;
+      font-size: 22px;
+      margin-bottom: 20px;
+      font-weight: 600;
     }
 
     .comprovante p {
-      margin: 6px 0;
-      font-size: 15px;
+      font-size: 16px;
+      margin: 10px 0;
+      color: #555;
     }
 
-    .bold {
-      font-weight: bold;
+    .comprovante .bold {
+      font-weight: 600;
+      color: #007bff;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 50px;
+      font-size: 14px;
+      color: #888;
+    }
+
+    /* Responsividade */
+    @media (max-width: 500px) {
+      .container {
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      input, button {
+        font-size: 16px;
+      }
+
+      .comprovante p {
+        font-size: 14px;
+      }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Painel de Devolução</h1>
+    <h1>Painel de Devolução e Reembolso</h1>
     <form id="formDevolucao">
-      <label for="cpf">CPF</label>
-      <input type="text" id="cpf" placeholder="Digite o CPF do cliente" required>
+      <label for="cpf">CPF do Cliente</label>
+      <input type="text" id="cpf" placeholder="Digite o CPF" required>
 
       <label for="banco">Banco do Cliente</label>
-      <input type="text" id="banco" placeholder="Digite o Banco (nubank, picpay, inter)" required>
+      <input type="text" id="banco" placeholder="Ex: Nubank, PicPay, Inter" required>
 
       <label for="saldo">Saldo do Cliente</label>
-      <input type="number" id="saldo" placeholder="Digite o Saldo do Cliente" required>
+      <input type="number" id="saldo" placeholder="Saldo disponível" required step="0.01" min="0" inputmode="decimal">
 
       <label for="valorDevolver">Valor a Devolver</label>
-      <input type="number" id="valorDevolver" placeholder="Digite o valor a Devolver" required>
+      <input type="number" id="valorDevolver" placeholder="Valor a ser devolvido" required step="0.01" min="0" inputmode="decimal">
 
-      <button type="submit" class="btn">Gerar Comprovante de Devolução</button>
+      <button type="submit">Gerar Comprovante</button>
     </form>
 
-    <!-- Comprovante Gerado -->
     <div class="comprovante" id="comprovante">
-      <h2>Comprovante de Devolução Gerado!</h2>
-      <p><span class="bold">CPF:</span> <span id="outCPF"></span></p>
-      <p><span class="bold">Banco:</span> <span id="outBanco"></span></p>
-      <p><span class="bold">Saldo do Cliente:</span> R$ <span id="outSaldo"></span></p>
-      <p><span class="bold">Saldo a Devolver:</span> R$ <span id="outDevolver"></span></p>
-      <p><span class="bold">Saldo Total:</span> R$ <span id="outTotal"></span></p>
-      <p><span class="bold">Status:</span> Pendente</p>
+      <h2>Comprovante Gerado</h2>
+      <div>
+        <p><span class="bold">CPF:</span> <span id="outCPF"></span></p>
+      </div>
+      <div>
+        <p><span class="bold">Banco:</span> <span id="outBanco"></span></p>
+      </div>
+      <div>
+        <p><span class="bold">Saldo:</span> R$ <span id="outSaldo"></span></p>
+      </div>
+      <div>
+        <p><span class="bold">Valor Devolução:</span> R$ <span id="outDevolver"></span></p>
+      </div>
+      <div>
+        <p><span class="bold">Saldo Total:</span> R$ <span id="outTotal"></span></p>
+      </div>
+      <div>
+        <p><span class="bold">Status:</span> Pendente</p>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p>© 2025 | Todos os direitos reservados</p>
     </div>
   </div>
 
   <script>
-    document.getElementById("formDevolucao").addEventListener("submit", function(e){
+    document.getElementById("formDevolucao").addEventListener("submit", function(e) {
       e.preventDefault();
 
+      // Capturando os valores dos campos
       let cpf = document.getElementById("cpf").value;
       let banco = document.getElementById("banco").value;
       let saldo = parseFloat(document.getElementById("saldo").value);
       let devolver = parseFloat(document.getElementById("valorDevolver").value);
       let total = saldo + devolver;
 
-      // Preencher comprovante
+      // Exibindo as informações no comprovante
       document.getElementById("outCPF").innerText = cpf;
       document.getElementById("outBanco").innerText = banco;
       document.getElementById("outSaldo").innerText = saldo.toLocaleString("pt-BR", {minimumFractionDigits: 2});
       document.getElementById("outDevolver").innerText = devolver.toLocaleString("pt-BR", {minimumFractionDigits: 2});
       document.getElementById("outTotal").innerText = total.toLocaleString("pt-BR", {minimumFractionDigits: 2});
 
-      // Mostrar comprovante
-      document.getElementById("comprovante").style.display = "block";
+      // Exibindo o comprovante com animação
+      let comprovante = document.getElementById("comprovante");
+      comprovante.classList.add("show"); // Ativa a animação para exibir o comprovante
     });
   </script>
 </body>
